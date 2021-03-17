@@ -24,6 +24,22 @@ public class IntroductionToBinaryTree {
 		}
 	}
 
+	public static void display(Node node) {
+		if(node == null) {
+			return;	
+		}
+		// node selfwork
+		String str = "";
+		str = str + node.left == null ? "." : node.left.data + "";
+		str = str + " <- " + node.data + " -> ";
+		str = str + node.right == null ? "." : node.right.data + "";
+
+		System.out.println(str);
+
+		display(node.left);
+		display(node.right);
+	}
+
 //	1 is for left
 //	2 is for right
 //	3 is for pop
@@ -31,12 +47,12 @@ public class IntroductionToBinaryTree {
 		Integer[] arr = { 50, 25, 12, null, null, 37, 30, null, null, null, 75, 62, null, 70, null, null, 87, null,
 				null };
 		Node root = new Node(arr[0], null, null);
-		Pair rootPair = new Pair(root, 1); 
+		Pair rootPair = new Pair(root, 1);
 		Stack<Pair> st = new Stack<>();
 		st.push(rootPair);
-		
+
 		int index = 0;
-		
+
 		while (st.size() > 0) {
 			Pair top = st.peek();
 			if (top.state == 1) {
@@ -70,6 +86,7 @@ public class IntroductionToBinaryTree {
 				st.pop();
 			}
 		}
+		display(root);
 
 	}
 }
