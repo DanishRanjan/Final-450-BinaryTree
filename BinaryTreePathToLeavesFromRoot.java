@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class printNodesKAway {
+public class BinaryTreePathToLeavesFromRoot {
   public static class Node {
     int data;
     Node left;
@@ -79,48 +79,21 @@ public class printNodesKAway {
     display(node.right);
   }
 
-  public static void printKNodesFar(Node node, int data, int k) {
-    //  path = new ArrayList<>(); 
-     nodeToRootPath(node,data);
-     for(int i = 0;i<path.size();i++){
-         printKLevelsDown(path.get(i),k-i,i==0?null:path.get(i-1));
-     }
-  }
-  
-    static ArrayList<Node> path = new ArrayList<>();
-     public static boolean nodeToRootPath(Node node, int data){
-        if(node == null){
-            return false;
-        }
-        
-        if(node.data == data){
-        	path.add(node);
-            return true;
-        }
-        
-        boolean lc = nodeToRootPath(node.left,data);
-        if(lc){
-        	path.add(node);
-            return true;
-        }
-        boolean rc = nodeToRootPath(node.right,data);
-        if(rc){
-        	path.add(node);
-            return true;
-        }
-        return false;
-     }
-
-     public static void printKLevelsDown(Node node, int k, Node blocker){
-    if(node == null || k < 0 || node == blocker){
-        return;
+  public static void pathToLeafFromRoot(Node node, String path, int sum, int lo, int hi){
+      if (node == null) {
+      return;
     }
-    
-    if(k==0){
-        System.out.println(node.data);
-    }
-    printKLevelsDown(node.left,k-1,blocker);
-    printKLevelsDown(node.right,k-1,blocker);
+      
+      if(node.left==null && node.right==null){
+          sum = sum + node.data;
+          if(sum>=lo && sum<=hi){
+              System.out.println(path+node.data);
+          }
+          return;
+      }
+      
+      pathToLeafFromRoot(node.left,path+node.data+" ",sum+node.data,lo,hi);
+      pathToLeafFromRoot(node.right,path+node.data+" ",sum+node.data,lo,hi);
   }
 
   public static void main(String[] args) throws Exception {
@@ -136,11 +109,11 @@ public class printNodesKAway {
       }
     }
 
-    int data = Integer.parseInt(br.readLine());
-    int k = Integer.parseInt(br.readLine());
+    int lo = Integer.parseInt(br.readLine());
+    int hi = Integer.parseInt(br.readLine());
 
     Node root = construct(arr);
-    printKNodesFar(root, data, k);
+    pathToLeafFromRoot(root, "", 0, lo, hi);
   }
 
 }

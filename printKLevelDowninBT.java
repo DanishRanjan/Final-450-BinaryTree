@@ -80,7 +80,7 @@ public class printKLevelDowninBT {
   }
 
   public static void printKLevelsDown(Node node, int k){
-    if(node == null){
+    if(node == null || k<0){
         return;
     }
     
